@@ -1,9 +1,15 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  CreateStudentDTO,
+  FindStudentResponseDTO,
+  StudentResponseDTO,
+  UpdateStudentDTO,
+} from './dto/student.dto';
 
 @Controller('students')
 export class StudentController {
   @Get()
-  getStudents() {
+  getStudents(): FindStudentResponseDTO[] {
     return 'All Students';
   }
 
@@ -25,7 +31,9 @@ export class StudentController {
    * >>> }
    **/
   @Get('/:studentId')
-  getStudentById(@Param('studentId') studentId: string) {
+  getStudentById(
+    @Param('studentId') studentId: string,
+  ): FindStudentResponseDTO {
     console.log(studentId);
     return `Get Student With ID of ${studentId}`;
   }
@@ -34,12 +42,15 @@ export class StudentController {
    * typically we get the whole body itself, actully we don't extact it out
    **/
   @Post()
-  createStudent(@Body() body) {
+  createStudent(@Body() body: CreateStudentDTO): StudentResponseDTO {
     return `Create Student With The Following Data ${JSON.stringify(body)}`;
   }
 
   @Put('/:studentId')
-  updateStudent(@Param('studentId') studentId: string, @Body() body) {
+  updateStudent(
+    @Param('studentId') studentId: string,
+    @Body() body: UpdateStudentDTO,
+  ): StudentResponseDTO {
     return `Update Student With Id of ${studentId} And The Following Data ${JSON.stringify(
       body,
     )}`;
