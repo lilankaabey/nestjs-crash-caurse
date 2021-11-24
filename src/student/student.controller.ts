@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import {
   CreateStudentDTO,
   FindStudentResponseDTO,
@@ -32,9 +40,9 @@ export class StudentController {
    * >>>  return console.log(params); //{ studentId: '1djada-s5d4a6-5sd6a4-das1a5'}
    * >>> }
    **/
-  @Get('/:studentId')
+  @Get('/:studentId') //use ParseUUIDPipe to parse a string parameter and validate if it is a UUID.
   getStudentById(
-    @Param('studentId') studentId: string,
+    @Param('studentId', new ParseUUIDPipe()) studentId: string,
   ): FindStudentResponseDTO {
     console.log(studentId);
     return this.studentService.getStudentById(studentId);
@@ -50,7 +58,7 @@ export class StudentController {
 
   @Put('/:studentId')
   updateStudent(
-    @Param('studentId') studentId: string,
+    @Param('studentId', new ParseUUIDPipe()) studentId: string,
     @Body() body: UpdateStudentDTO,
   ): StudentResponseDTO {
     return this.studentService.udateStudent(body, studentId);

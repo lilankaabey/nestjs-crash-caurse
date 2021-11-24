@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { FindStudentResponseDTO, StudentResponseDTO } from 'src/student/dto/student.dto';
 import { teachers } from '../db';
 import { FindTeacherResponseDTO } from './dto/teacher.dto';
 
